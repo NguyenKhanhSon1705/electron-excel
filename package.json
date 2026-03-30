@@ -1,0 +1,65 @@
+{
+  "name": "electron-app",
+  "version": "1.0.0",
+  "main": "dist/main/main.js",
+  "author": "nguyenkhanhson",
+  "license": "MIT",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:next\" \"npm run dev:electron\"",
+    "dev:next": "next dev",
+    "dev:electron": "cross-env NODE_ENV=development wait-on http://localhost:3000 && tsc -p tsconfig.main.json && electron .",
+    "start": "tsc -p tsconfig.main.json && electron .",
+    "build": "next build && tsc -p tsconfig.main.json",
+    "build:go": "go build -C ../go-cli -o ../my-electron-app/bin/go-cli.exe main.go",
+    "dist": "npm run build && electron-builder",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.2.2",
+    "@types/electron-devtools-installer": "^4.0.0",
+    "@types/node": "^25.5.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "autoprefixer": "^10.4.27",
+    "concurrently": "^9.2.1",
+    "cross-env": "^10.1.0",
+    "electron": "^41.0.3",
+    "electron-builder": "^26.8.1",
+    "electron-is-dev": "^3.0.1",
+    "electron-reload": "^2.0.0-alpha.1",
+    "postcss": "^8.5.8",
+    "tailwindcss": "^4.2.2",
+    "typescript": "^6.0.2",
+    "wait-on": "^9.0.4"
+  },
+  "dependencies": {
+    "@handsontable/react": "^14.6.2",
+    "clsx": "^2.1.1",
+    "dotenv": "^17.3.1",
+    "electron-serve": "^3.0.1",
+    "framer-motion": "^12.4.10",
+    "handsontable": "^14.6.2",
+    "lucide-react": "^0.479.0",
+    "next": "^16.2.1",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "tailwind-merge": "^3.0.2",
+    "xlsx": "^0.18.5"
+  },
+  "build": {
+    "appId": "com.nguyenkhanhson.electron-app",
+    "productName": "ExcelToWordTool",
+    "files": [
+      "dist/**/*",
+      "out/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "output": "release"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.png"
+    }
+  }
+}
