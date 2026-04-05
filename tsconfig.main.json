@@ -11,5 +11,7 @@
     "skipLibCheck": true,
     "resolveJsonModule": true
   },
-  "include": ["src/main/**/*"]
+  "include": [
+    "src/main/**/*"
+  ]
 }

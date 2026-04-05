@@ -7,10 +7,10 @@
   "scripts": {
     "dev": "concurrently \"npm run dev:next\" \"npm run dev:electron\"",
     "dev:next": "next dev",
-    "dev:electron": "cross-env NODE_ENV=development wait-on http://localhost:3000 && tsc -p tsconfig.main.json && electron .",
-    "start": "tsc -p tsconfig.main.json && electron .",
-    "build": "next build && tsc -p tsconfig.main.json",
-    "build:go": "go build -C ../go-cli -o ../my-electron-app/bin/go-cli.exe main.go",
+    "dev:electron": "npm run build:go && cross-env NODE_ENV=development wait-on http://localhost:3000 && tsc -p tsconfig.main.json && electron .",
+    "start": "npm run build:go && tsc -p tsconfig.main.json && electron .",
+    "build": "npm run build:go && next build && tsc -p tsconfig.main.json",
+    "build:go": "go build -C ../go-cli -o ../tool-convert-excel/bin/go-cli.exe main.go",
     "dist": "npm run build && electron-builder",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -34,17 +34,32 @@
   },
   "dependencies": {
     "@handsontable/react": "^14.6.2",
+    "@tiptap/extension-color": "^3.22.1",
+    "@tiptap/extension-font-family": "^3.22.1",
+    "@tiptap/extension-table": "^3.22.1",
+    "@tiptap/extension-table-cell": "^3.22.1",
+    "@tiptap/extension-table-header": "^3.22.1",
+    "@tiptap/extension-table-row": "^3.22.1",
+    "@tiptap/extension-text-align": "^3.22.1",
+    "@tiptap/extension-text-style": "^3.22.1",
+    "@tiptap/extension-underline": "^3.22.1",
+    "@tiptap/react": "^3.22.1",
+    "@tiptap/starter-kit": "^3.22.1",
     "clsx": "^2.1.1",
+    "docx-preview": "^0.3.7",
+    "docxtemplater": "^3.68.3",
     "dotenv": "^17.3.1",
     "electron-serve": "^3.0.1",
     "framer-motion": "^12.4.10",
     "handsontable": "^14.6.2",
+    "html-to-docx": "^1.8.0",
     "lucide-react": "^0.479.0",
+    "mammoth": "^1.12.0",
     "next": "^16.2.1",
+    "pizzip": "^3.2.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "tailwind-merge": "^3.0.2",
-    "xlsx": "^0.18.5"
+    "tailwind-merge": "^3.0.2"
   },
   "build": {
     "appId": "com.nguyenkhanhson.electron-app",
@@ -53,6 +68,15 @@
       "dist/**/*",
       "out/**/*",
       "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "bin/go-cli.exe",
+        "to": "bin/go-cli.exe"
+      }
+    ],
+    "asarUnpack": [
+      "bin/**/*"
     ],
     "directories": {
       "output": "release"
